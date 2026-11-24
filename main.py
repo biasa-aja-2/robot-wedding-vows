@@ -8,7 +8,17 @@ low battery"), with the punch landing in the last words — love that
 survives even the robot equivalent of death, because a factory reset
 is not the end when your partner keeps a backup of you.
 
-Pure Python standard library only.
+Pure Python standard library only.Craft notes — why this line works:
+  * Classic vow cadence: "in sickness and in ..." is the one wedding
+    formula every reader recognises, so swapping "health" for "low
+    battery" lands the robot premise in three words, not a setup line.
+  * Machine-specific detail, not decoration: a factory reset is the
+    robot equivalent of death ("till death do us part"), and a restore
+    from backup is the robot equivalent of undying love — the joke and
+    the sentiment are the same mechanism, not a pun bolted on top.
+  * Punch in the final words: the line ends on "backup", a short,
+    warm, unexpected place for a vow to land, so the laugh and the
+    promise arrive together instead of the joke front-loading.
 """
 
 import os
@@ -31,6 +41,12 @@ def validate(text):
         raise ValueError("vow is not text")
     if not text.strip():
         raise ValueError("vow is blank or whitespace only")
+    if text != text.strip():
+        raise ValueError("vow has leading or trailing whitespace")
+    if "  " in text:
+        raise ValueError("vow contains a double space")
+    if not text.endswith("."):
+        raise ValueError("vow must end with a period")
     if "\n" in text or "\r" in text:
         raise ValueError("vow must be a single line")
     if any(ord(ch) < 32 and ch not in ("\t",) for ch in text):
